@@ -22,6 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use tool_crawler\local\url;
 use tool_crawler\robot\crawler;
 
 defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden');
@@ -160,6 +161,8 @@ class tool_crawler_robot_crawler_test extends advanced_testcase {
     /** Regression test for Issue #17  */
     public function test_reset_queries() {
         global $DB;
+        // Create a new object.
+        $persistent = new url();
 
         $node = [
             'url' => 'http://crawler.test/course/index.php',
@@ -182,7 +185,13 @@ class tool_crawler_robot_crawler_test extends advanced_testcase {
             'httpmsg' => 'OK',
             'errormsg' => null
         ];
-        $nodeid = $DB->insert_record('tool_crawler_url', $node);
+
+        $persistent->from_record((object)$node);
+
+        // Create object in the database.
+        $persistent->create();
+
+        $nodeid = $persistent->get('id');
 
         $crawler = new crawler();
         $crawler->reset_for_recrawl($nodeid);
