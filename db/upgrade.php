@@ -109,5 +109,51 @@ function xmldb_tool_crawler_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2020012300, 'tool', 'crawler');
     }
 
+    if ($oldversion < 2020022100) {
+        // Add persistent API fields to the 3 DB tables.
+        $tablenames = ['tool_crawler_url', 'tool_crawler_edge', 'tool_crawler_history'];
+        foreach ($tablenames as $tablename) {
+            $table = new xmldb_table($tablename);
+
+            if ($tablename === 'tool_crawler_url') {
+                // Use existing createdate field as timecreated instead of creating a new timecreated field.
+                $field = new xmldb_field('createdate', XMLDB_TYPE_INTEGER, '10', null, true, false);
+                if ($dbman->field_exists($table, $field)) {
+                    $dbman->rename_field($table, $field, 'timecreated');
+                }
+            } else {
+                // just add the field to the table
+                $field = new xmldb_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, true, false, '0');
+                if (!$dbman->field_exists($table, $field)) {
+                    $dbman->add_field($table, $field);
+                }
+            }
+
+            $field = new xmldb_field('usermodified', XMLDB_TYPE_INTEGER, '10', null, false, false);
+            if (!$dbman->field_exists($table, $field)) {
+                $dbman->add_field($table, $field);
+            }
+            $field = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, false, false);
+            if (!$dbman->field_exists($table, $field)) {
+                $dbman->add_field($table, $field);
+            }
+        }
+
+        // level and external are reserved words in mssql.
+        $table = new xmldb_table('tool_crawler_url');
+        $field = new xmldb_field('level', XMLDB_TYPE_INTEGER, '1', null, null, null, '2', 'priority');
+
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->rename_field($table, $field, 'urllevel');
+        }
+        $field = new xmldb_field('external', XMLDB_TYPE_INTEGER);
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->rename_field($table, $field, 'externalurl');
+        }
+
+        // Crawler savepoint reached.
+        upgrade_plugin_savepoint(true, 2020022100, 'tool', 'crawler');
+    }
+
     return true;
 }

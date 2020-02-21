@@ -163,8 +163,8 @@ class tool_crawler_robot_crawler_test extends advanced_testcase {
 
         $node = [
             'url' => 'http://crawler.test/course/index.php',
-            'external' => 0,
-            'createdate' => strtotime("16-05-2016 10:00:00"),
+            'externalurl' => 0,
+            'timecreated' => strtotime("16-05-2016 10:00:00"),
             'lastcrawled' => strtotime("16-05-2016 11:20:00"),
             'needscrawl' => strtotime("17-05-2017 10:00:00"),
             'httpcode' => 200,
@@ -227,8 +227,8 @@ class tool_crawler_robot_crawler_test extends advanced_testcase {
         $escapedredirecturl = 'http://crawler.test/local/extendedview/viewcourse.php?id=1&amp;section=2';
         $node = [
             'url' => $url,
-            'external' => 0,
-            'createdate' => strtotime("16-05-2016 10:00:00"),
+            'externalurl' => 0,
+            'timecreated' => strtotime("16-05-2016 10:00:00"),
             'lastcrawled' => strtotime("16-05-2016 11:20:00"),
             'needscrawl' => strtotime("17-05-2017 10:00:00"),
             'httpcode' => 200,
@@ -267,8 +267,8 @@ class tool_crawler_robot_crawler_test extends advanced_testcase {
         $url = 'http://crawler.test/course/view.php?id=1&section=2';
         $node = [
             'url' => $url,
-            'external' => 0,
-            'createdate' => strtotime("03-01-2020 10:00:00"),
+            'externalurl' => 0,
+            'timecreated' => strtotime("03-01-2020 10:00:00"),
             'lastcrawled' => strtotime("31-12-2019 11:20:00"),
             'needscrawl' => strtotime("01-01-2020 10:00:00"),
             'httpcode' => 200,
@@ -296,7 +296,7 @@ class tool_crawler_robot_crawler_test extends advanced_testcase {
         $node->contents = $page . $linktoexclude;
         $node->url      = $url;
         $node->id       = $insertid;
-        $node->level    = TOOL_CRAWLER_NODE_LEVEL_PARENT;
+        $node->urllevel    = TOOL_CRAWLER_NODE_LEVEL_PARENT;
 
         $this->resetAfterTest(true);
 
@@ -341,7 +341,7 @@ class tool_crawler_robot_crawler_test extends advanced_testcase {
         $node = $this->robot->mark_for_crawl($CFG->wwwroot, $parentlocalurl, 1, $parentpriority);
         $node->httpcode = 200;
         $node->mimetype = 'text/html';
-        $node->external = 0;
+        $node->externalurl = 0;
         $node->contents = <<<HTML
 <!doctype html>
 <html>
@@ -355,7 +355,7 @@ class tool_crawler_robot_crawler_test extends advanced_testcase {
 </html>
 HTML;
         // Parse the parent node, to create the direct child node.
-        $parentnode = $this->robot->parse_html($node, $node->external);
+        $parentnode = $this->robot->parse_html($node, $node->externalurl);
 
         // Internal node direct child.
         $url = new moodle_url('/' . $directchildlocalurl);
@@ -363,7 +363,7 @@ HTML;
         $node->url = $CFG->wwwroot.'/'.$directchildlocalurl;
         $node->httpcode = 200;
         $node->mimetype = 'text/html';
-        $node->external = 0;
+        $node->externalurl = 0;
         $node->contents = <<<HTML
 <!doctype html>
 <html>
@@ -377,7 +377,7 @@ HTML;
 </html>
 HTML;
         // Parse the direct child, to create the indirect child node.
-        $directchildnode = $this->robot->parse_html($node, $node->external);
+        $directchildnode = $this->robot->parse_html($node, $node->externalurl);
         $indirectchildnode = $DB->get_record('tool_crawler_url', ['url' => $indirectchildexternalurl]);
 
         // Direct child nodes should inherit priority from parent node (super node).

@@ -54,8 +54,8 @@ class tool_crawler_robot_cleanup_test extends advanced_testcase {
         $dataobjects = array(
             array(
                 'url' => 'http://cqu.ubox001.com/course/index.php',
-                'external' => 0,
-                'createdate' => strtotime("16-05-2016 10:00:00"),
+                'externalurl' => 0,
+                'timecreated' => strtotime("16-05-2016 10:00:00"),
                 'lastcrawled' => strtotime("16-05-2016 11:20:00"),
                 'needscrawl' => strtotime("17-05-2017 10:00:00"),
                 'httpcode' => 200,
@@ -75,8 +75,8 @@ class tool_crawler_robot_cleanup_test extends advanced_testcase {
             ),
             array(
                 'url' => 'http://moodle.org/',
-                'external' => 1,
-                'createdate' => strtotime("15-05-2016 10:00:00"),
+                'externalurl' => 1,
+                'timecreated' => strtotime("15-05-2016 10:00:00"),
                 'lastcrawled' => strtotime("16-05-2016 14:49:59"),
                 'needscrawl' => strtotime("17-05-2017 10:00:00"),
                 'httpcode' => 200,
@@ -96,8 +96,8 @@ class tool_crawler_robot_cleanup_test extends advanced_testcase {
             ),
             array(
                 'url' => 'http://cqu.ubox001.com/course/index.php?categoryid=1',
-                'external' => 0,
-                'createdate' => strtotime("16-05-2016 10:00:00"),
+                'externalurl' => 0,
+                'timecreated' => strtotime("16-05-2016 10:00:00"),
                 'lastcrawled' => strtotime("16-05-2016 14:50:01"),
                 'needscrawl' => strtotime("17-05-2017 10:00:00"),
                 'httpcode' => 200,

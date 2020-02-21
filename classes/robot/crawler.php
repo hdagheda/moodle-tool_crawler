@@ -423,12 +423,12 @@ class crawler {
         if (!$node) {
             // If not in the queue then add it.
             $node = (object) array();
-            $node->createdate = time();
+            $node->timecreated = time();
             $node->url        = $url;
             $node->external   = self::is_external($url);
             $node->needscrawl = time();
             $node->priority = $priority;
-            $node->level = $level;
+            $node->urllevel = $level;
 
             if (isset($courseid)) {
                 $node->courseid = $courseid;
@@ -447,10 +447,10 @@ class crawler {
                 $node->priority = $priority;
                 $needsupdating = true;
             }
-            if ($node->level != $level) {
+            if ($node->urllevel != $level) {
                 // Set the level again, in case this node has been seen again at a different
                 // level, to avoid reprocessing.
-                $node->level = $level;
+                $node->urllevel = $level;
             }
             if (isset($courseid)) {
                 $node->courseid = $courseid;
@@ -672,7 +672,7 @@ class crawler {
                 // Look for new links on this page from the html.
                 // Insert new links into tool_crawler_edge, and into tool_crawler_url table.
                 // Find the course, cm, and context of where we are for the main scraped URL.
-                $this->parse_html($result, $result->external, $verbose);
+                $this->parse_html($result, $result->externalurl, $verbose);
             } else {
                 if ($verbose) {
                     echo "NOT html\n";
@@ -916,7 +916,7 @@ class crawler {
         global $DB;
 
         // Ascertain the correct node level based on parent node level.
-        if (!empty($from->level) && $from->level == TOOL_CRAWLER_NODE_LEVEL_PARENT) {
+        if (!empty($from->urllevel) && $from->urllevel == TOOL_CRAWLER_NODE_LEVEL_PARENT) {
             $level = TOOL_CRAWLER_NODE_LEVEL_DIRECT_CHILD;
         } else {
             $level = TOOL_CRAWLER_NODE_LEVEL_INDIRECT_CHILD;
@@ -1318,7 +1318,7 @@ class crawler {
             } else {
                 $result->redirect = '';
             }
-            $result->external = self::is_external($final);
+            $result->externalurl = self::is_external($final);
 
             $ishtml = (strpos($contenttype, 'text/html') === 0);
 

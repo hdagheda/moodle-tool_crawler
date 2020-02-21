@@ -8,8 +8,8 @@
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="url" TYPE="char" LENGTH="1333" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="external" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="createdate" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="externalurl" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="lastcrawled" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="needscrawl" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="httpcode" TYPE="char" LENGTH="3" NOTNULL="false" SEQUENCE="false"/>
@@ -27,7 +27,9 @@
         <FIELD NAME="httpmsg" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="errormsg" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="priority" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" DEFAULT="0"/>
-        <FIELD NAME="level" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="2" SEQUENCE="false" COMMENT="Node level, 2 for parent node, 1 for direct child and 0 for subsequent children."/>
+        <FIELD NAME="urllevel" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="2" SEQUENCE="false" COMMENT="Node level, 2 for parent node, 1 for direct child and 0 for subsequent children."/>
+        <FIELD NAME="usermodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -49,6 +51,9 @@
         <FIELD NAME="lastmod" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="idattr" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" DEFAULT="0"/>
+        <FIELD NAME="usermodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -69,6 +74,9 @@
         <FIELD NAME="links" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="broken" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="oversize" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" DEFAULT="0"/>
+        <FIELD NAME="usermodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
